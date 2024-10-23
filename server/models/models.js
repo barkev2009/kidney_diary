@@ -17,8 +17,13 @@ const UserParameter = sequelize.define(
     'user_parameter',
     {
         id: { type: DataTypes.INTEGER, unique: true, primaryKey: true, allowNull: false, autoIncrement: true },
-        water_limit: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
-        step_limit: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 }
+        uuid: { type: DataTypes.STRING, allowNull: false },
+        water_min: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
+        water_max: { type: DataTypes.INTEGER, allowNull: true },
+        water_rating: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
+        steps_min: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
+        steps_max: { type: DataTypes.INTEGER, allowNull: true },
+        steps_rating: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 }
     }
 )
 
@@ -26,13 +31,17 @@ const Item = sequelize.define(
     'item',
     {
         id: { type: DataTypes.INTEGER, unique: true, primaryKey: true, allowNull: false, autoIncrement: true },
+        uuid: { type: DataTypes.STRING, allowNull: false },
         date: { type: DataTypes.DATE, allowNull: false, defaultValue: new Date() },
         water: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
-        steps: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 }
+        steps: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
+        water_rating: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
+        steps_rating: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
+        total_rating: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 }
     }
 )
 
-User.hasOne(UserParameter);
+User.hasMany(UserParameter);
 UserParameter.belongsTo(User);
 
 User.hasMany(Item);

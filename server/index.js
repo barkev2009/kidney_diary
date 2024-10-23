@@ -4,7 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const models = require('./models/models')
 
-// const router = require('./routers/index');
+const router = require('./routers/index');
 const errorHandler = require('./middleware/ErrorHandlerMiddleware');
 const sequelize = require('./db');
 
@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5004;
 const app = express()
 app.use(cors());
 app.use(express.json());
-// app.use('/api', router);
+app.use('/api', router);
 
 // Middleware с ошибками должен регистрироваться в последнюю очередь!!!
 app.use(errorHandler);
