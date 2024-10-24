@@ -45,7 +45,7 @@ code {
   box-shadow: 1px 3px 20px 0px #2d2d2d;
   padding: 50px;
   animation-name: auth-slide;
-  animation-duration: 1s;
+  animation-duration: .2s;
   animation-fill-mode: forwards;
   animation-timing-function: ease-out;
 }

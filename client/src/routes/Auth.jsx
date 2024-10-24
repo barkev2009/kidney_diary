@@ -4,8 +4,11 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { AUTH_ROUTE, MAIN_ROUTE, REGISTER_ROUTE } from '../constants';
 import { loginAPI, register } from '../api/user';
 import { setIsAuth, setUser } from '../reducers/user';
+import { useSetCookie } from '../hooks';
 
 const Auth = () => {
+
+    useSetCookie();
 
     const [login, setLogin] = useState('');
     const [name, setName] = useState('');
