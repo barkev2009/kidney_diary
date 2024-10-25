@@ -26,7 +26,8 @@ code {
 /* Containers */
 
 .auth_container,
-.main_container {
+.main_container,
+.slider_container {
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -40,6 +41,19 @@ code {
 .tile_container {
   width: calc(100% / 8 * 7);
   float: right;
+}
+
+.slider_container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translateX(100%);
+  transition: all .2s;
+  background-color: var(--background);
+}
+
+.slider_container.active {
+  transform: translateX(0%);
 }
 
 /* Authorization */

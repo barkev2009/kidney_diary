@@ -1,19 +1,14 @@
-import React from 'react'
-import { useSetCookie } from '../hooks'
-import { useNavigate } from 'react-router-dom';
-import { AUTH_ROUTE, WEEKDAYS } from '../constants';
-import { useDispatch } from 'react-redux';
-import { setIsAuth } from '../reducers/user';
+import React, { useState } from 'react';
+import { useSetCookie } from '../hooks';
+import { WEEKDAYS } from '../constants';
+import Slider from '../components/Slider';
 
 const Main = () => {
 
     useSetCookie();
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    const logOutHandler = () => {
-        navigate(AUTH_ROUTE);
-        dispatch(setIsAuth(false));
+    const [active, setActive] = useState(false);
+    const sliderToggler = () => {
+        setActive(prev => !prev)
     }
 
     return (
@@ -21,18 +16,14 @@ const Main = () => {
             <div className="weekdays">
                 {['  ', ...WEEKDAYS].map(d => <span key={d}>{d}</span>)}
             </div>
-            {/* <div className='tile_container'>
-                {[...Array(1000).keys()].map(i => <div key={i} className='tile'>{i}</div>)}
-            </div> */}
+            <Slider active={active} sliderToggler={sliderToggler} />
             <div className='tile_container'>
                 {[...Array(100).keys()].map(i => <div key={i} className='tile_row'>
                     {
-                        [...Array(7).keys()].map(tile => <div key={tile} className='tile'>{tile}</div>)
+                        [...Array(7).keys()].map(tile => <div onClick={sliderToggler} key={tile} className='tile'>{tile}</div>)
                     }
                 </div>)}
             </div>
-
-            <button onClick={logOutHandler}>TO AUTH</button>
         </div>
     )
 }

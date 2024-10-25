@@ -89,6 +89,35 @@ class ItemController {
         )
     }
 
+    async getByDate(req, resp, next) {
+        tryCatchWrapper(
+            async () => {
+                const { date } = req.body;
+                const { uuid } = req.params;
+                const user = await User.findOne({ where: { uuid } });
+                if (!user) {
+                    return next(ApiError.badRequest(`Пользователя с uuid ${uuid} не существует`));
+                }
+                let item = await Item.findOne({
+                    where: {
+                        userId: user.id, date: {
+                            [Op.gte]: `${date} 00:00:00`,
+                            [Op.lte]: `${date} 23:59:59`
+                        }
+                    }
+                });
+                if (!item) {
+                    const { water_rating, steps_rating, total_rating } = calculateRatings({ water: 0, steps: 0 });
+                    item = await Item.create({
+                        userId: user.id, uuid: uuidLib.v4(),
+                        date, water: 0, steps: 0, water_rating, steps_rating, total_rating
+                    });
+                }
+                return resp.json(item)
+            }, req, resp, next, 'ItemController.getByDate'
+        )
+    }
+
     async getByUser(req, resp, next) {
         tryCatchWrapper(
             async () => {
