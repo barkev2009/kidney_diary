@@ -25,13 +25,22 @@ code {
 
 /* Containers */
 
-.auth_container {
+.auth_container,
+.main_container {
   position: relative;
   width: 100vw;
   height: 100vh;
+  overflow: auto;
+}
+
+.auth_container {
   overflow: hidden;
 }
 
+.tile_container {
+  width: calc(100% / 8 * 7);
+  float: right;
+}
 
 /* Authorization */
 
@@ -50,14 +59,25 @@ code {
   animation-timing-function: ease-out;
 }
 
-.auth_container h2 {
+.auth_form h2 {
   text-align: center;
+  margin: 0;
+  margin-bottom: 1rem;
 }
 
-.auth_container input {
+.auth_form input {
   width: 100%;
   font-size: 1.2rem;
   margin: 2px 0;
+}
+
+.auth_form button {
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 5px;
+  margin-top: 25px;
+  border: none;
+  background-color: var(--main-color);
 }
 
 .background_sector {
@@ -80,4 +100,32 @@ code {
   100% {
     top: 50%;
   }
+}
+
+/* Main */
+
+.main_container .weekdays {
+  position: sticky;
+  top: -1px;
+  background-color: var(--background);
+  border-bottom: 1px solid var(--main-color);
+}
+
+.main_container .weekdays span {
+  width: calc(100% / 8);
+  text-align: center;
+  padding: 10px;
+  display: inline-block;
+}
+
+.tile_container .tile_row {
+  border-bottom: 1px solid var(--main-color);
+}
+
+.tile_container .tile {
+  width: calc(100% / 7);
+  display: inline-block;
+  text-align: center;
+  aspect-ratio: 1;
+  border-left: 1px solid var(--main-color);
 }

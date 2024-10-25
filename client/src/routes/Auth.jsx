@@ -43,22 +43,22 @@ const Auth = () => {
                 <h2>{isLogin ? 'Авторизация' : 'Регистрация'}</h2>
                 {
                     !isLogin && <div >
-                        <input type="text" placeholder='Введите имя...' className="form-control mt-4" id="name_input" onChange={e => setName(e.target.value)} value={name} />
+                        <input type="text" placeholder='Введите имя...' id="name_input" onChange={e => setName(e.target.value)} value={name} />
                     </div>
                 }
                 <div >
-                    <input type="text" placeholder='Введите логин...' className="form-control mt-4" id="login_input" onChange={e => setLogin(e.target.value)} value={login} />
+                    <input type="text" placeholder='Введите логин...' id="login_input" onChange={e => setLogin(e.target.value)} value={login} />
                 </div>
                 <div >
-                    <input type={passVisible ? "text" : "password"} placeholder='Введите пароль...' className="form-control mt-4" id="password_input" onChange={e => setPassword(e.target.value)} value={password} />
+                    <input type={passVisible ? "text" : "password"} placeholder='Введите пароль...' id="password_input" onChange={e => setPassword(e.target.value)} value={password} />
                 </div>
-                <div className='mt-3'>
+                <div >
                     {
                         isLogin ? <div >Нет аккаунта? <NavLink to={REGISTER_ROUTE}>Зарегистрируйся!</NavLink></div>
                             : <div >Есть аккаунт? <NavLink to={AUTH_ROUTE}>Авторизуйся!</NavLink></div>
                     }
                 </div>
-                <button type="button" className="btn btn-outline-primary" onClick={logIn} >{isLogin ? 'Войти' : 'Регистрация'}</button>
+                <button type="button" onClick={logIn} >{isLogin ? 'Войти' : 'Регистрация'}</button>
             </div>
             <div className="background_sector" />
         </div>
