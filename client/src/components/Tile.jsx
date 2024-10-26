@@ -25,14 +25,14 @@ const Tile = ({ date, year }) => {
             if (item) {
                 switch (item.total_rating) {
                     case 0:
-                        setStyle(prev => ({...prev, backgroundColor: '#703030'}));
+                        setStyle(prev => ({ ...prev, backgroundColor: '#703030' }));
                         break;
                     default:
-                        setStyle(prev => ({...prev, backgroundColor: 'transparent'}));
+                        setStyle(prev => ({ ...prev, backgroundColor: 'transparent' }));
                         break;
                 }
             }
-        }, [items]
+        }, [items, year]
     );
 
     return (
