@@ -156,6 +156,7 @@ code {
 
 .month_container .month {
   text-align: center;
+  box-shadow: inset -1px 0px 0px 1px var(--main-color);
 }
 
 .month_container .month.even {
