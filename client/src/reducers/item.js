@@ -1,20 +1,27 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getByDateAPI } from '../api/item';
+import { getByDateAPI, getByUserAPI } from '../api/item';
 
 export const getByDate = createAsyncThunk(
     'item/getByDate',
     getByDateAPI
 )
+export const getByUser = createAsyncThunk(
+    'item/getByUser',
+    getByUserAPI
+)
 
 const initialState = {
-    data: {}
+    data: {},
+    userItems: []
 };
 
 export const userSlice = createSlice({
     name: 'item',
     initialState,
     reducers: {
-
+        clearItem(state, action) {
+            state.data = {};
+        }
     },
     extraReducers: builder => {
         builder
@@ -23,9 +30,14 @@ export const userSlice = createSlice({
                     state.data = action.payload
                 }
             )
+            .addCase(
+                getByUser.fulfilled, (state, action) => {
+                    state.userItems = action.payload
+                }
+            )
     }
 });
 
 const { reducer } = userSlice;
-// export const { setIsAuth, setUser } = userSlice.actions
+export const { clearItem } = userSlice.actions
 export default reducer

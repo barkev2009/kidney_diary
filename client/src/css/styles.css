@@ -4,6 +4,7 @@
 
 :root {
   --background: #324376;
+  --backgroundDarker: #27345c;
   --main-color: white;
 }
 
@@ -141,8 +142,9 @@ code {
   display: inline-block;
 }
 
-.tile_container .tile_row {
-  border-bottom: 1px solid var(--main-color);
+.tile_container .tile_row.even {
+  /* border-bottom: 1px solid var(--main-color); */
+  background-color: var(--backgroundDarker);
 }
 
 .tile_container .tile {
@@ -150,9 +152,12 @@ code {
   display: inline-block;
   text-align: center;
   aspect-ratio: 1;
-  border-left: 1px solid var(--main-color);
 }
 
 .month_container .month {
-  border-bottom: 1px solid var(--main-color);
+  text-align: center;
+}
+
+.month_container .month.even {
+  background-color: var(--backgroundDarker);
 }
