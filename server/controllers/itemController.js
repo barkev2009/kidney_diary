@@ -3,7 +3,6 @@ const { User, Item, UserParameter } = require('../models/models');
 const tryCatchWrapper = require('../utils/tryCatchWrapper');
 const uuidLib = require('uuid');
 const { Op } = require('sequelize');
-const { date2String } = require('../utils/date');
 
 const calculateRatings = async ({ water, steps }) => {
     const userParameter = await UserParameter.findOne(
@@ -96,8 +95,6 @@ class ItemController {
                 let { date } = req.body;
                 const { uuid } = req.params;
                 const user = await User.findOne({ where: { uuid } });
-                date = date2String(new Date(date));
-                console.log(date);
                 if (!user) {
                     return next(ApiError.badRequest(`Пользователя с uuid ${uuid} не существует`));
                 }
