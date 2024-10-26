@@ -9,5 +9,6 @@ router.put('/:uuid', authMiddleware, itemController.edit);
 router.delete('/:uuid', authMiddleware, itemController.delete);
 router.get('/uuid/:uuid', authMiddleware, itemController.get);
 router.get('/user/:uuid', authMiddleware, itemController.getByUser);
+router.get('/user_year', authMiddleware, itemController.getByUserYear);
 
 module.exports = router;

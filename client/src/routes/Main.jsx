@@ -17,7 +17,7 @@ const Main = () => {
     useEffect(
         () => {
             if (user.id) {
-                dispatch(getByUser({ uuid: user.id }));
+                dispatch(getByUser({ uuid: user.id, year }));
             }
         }, [user]
     );
@@ -25,7 +25,7 @@ const Main = () => {
     return (
         <div className='main_container'>
             <WeekdaysContainer setYear={setYear} />
-            <Slider />
+            <Slider year={year} />
             <TileContainer year={year} />
             <MonthContainer year={year} />
         </div>

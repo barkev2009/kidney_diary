@@ -134,6 +134,25 @@ class ItemController {
         )
     }
 
+    async getByUserYear(req, resp, next) {
+        tryCatchWrapper(
+            async () => {
+                const { uuid, year } = req.query;
+
+                const user = await User.findOne({ where: { uuid } });
+                if (!user) {
+                    return next(ApiError.badRequest(`Пользователя с uuid ${uuid} не существует`));
+                }
+                const items = await Item.findAll({ where: { userId: user.id, date: {
+                    [Op.gte]: new Date(`${year}-01-01 00:00:00`),
+                    [Op.lte]: new Date(`${year}-12-31 23:59:59`)
+                } } });
+
+                return resp.json(items)
+            }, req, resp, next, 'ItemController.getByUserYear'
+        )
+    }
+
     async delete(req, resp, next) {
         tryCatchWrapper(
             async () => {

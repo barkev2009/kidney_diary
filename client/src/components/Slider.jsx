@@ -6,7 +6,7 @@ import { setIsAuth } from '../reducers/user';
 import { clearItem, getByUser } from '../reducers/item';
 import ItemContainer from '../containers/ItemContainer';
 
-const Slider = () => {
+const Slider = ({ year }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const item = useSelector(state => state.item.data);
@@ -18,11 +18,11 @@ const Slider = () => {
     }
     const closeSlider = () => {
         dispatch(clearItem());
-        dispatch(getByUser({uuid: user.id}));
+        dispatch(getByUser({ uuid: user.id, year }));
     }
 
     return (
-        <div className={`slider_container ${Object.keys(item).length !== 0  && 'active'}`}>
+        <div className={`slider_container ${Object.keys(item).length !== 0 && 'active'}`}>
             <button onClick={closeSlider}>BACK</button>
             <button onClick={logOutHandler}>TO AUTH</button>
             <ItemContainer />

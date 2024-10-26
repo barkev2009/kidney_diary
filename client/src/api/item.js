@@ -6,7 +6,7 @@ export const getByDateAPI = async ({ uuid, date }) => {
     return data;
 }
 
-export const getByUserAPI = async ({ uuid }) => {
-    const { data } = await $authHost.get('api/item/user/' + uuid);
+export const getByUserAPI = async ({ uuid, year }) => {
+    const { data } = await $authHost.get('api/item/user_year', { params: { uuid, year } });
     return data;
 }
