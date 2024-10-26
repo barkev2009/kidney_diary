@@ -54,7 +54,7 @@ class UserController {
     async checkAuth(req, resp, next) {
         tryCatchWrapper(
             async () => {
-                const token = generateJWT(req.user.uuid, req.user.login, req.user.name);
+                const token = generateJWT(req.user.id, req.user.login, req.user.name);
                 return resp.json({ token })
             }, req, resp, next, 'UserController.checkAuth'
         )

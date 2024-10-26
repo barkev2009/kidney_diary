@@ -20,7 +20,7 @@ export const userSlice = createSlice({
         builder
             .addCase(
                 getByDate.fulfilled, (state, action) => {
-                    console.log(action.payload);
+                    state.data = action.payload
                 }
             )
     }
