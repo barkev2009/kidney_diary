@@ -10,7 +10,7 @@ import { getByUser } from '../reducers/item';
 const Main = () => {
 
     useSetCookie();
-    const [year, setYear] = useState(2023);
+    const [year, setYear] = useState(new Date().getFullYear());
     const user = useSelector(state => state.user.user);
     const dispatch = useDispatch();
 
@@ -24,7 +24,7 @@ const Main = () => {
 
     return (
         <div className='main_container'>
-            <WeekdaysContainer setYear={setYear} />
+            <WeekdaysContainer year={year} setYear={setYear} />
             <Slider year={year} />
             <TileContainer year={year} />
             <MonthContainer year={year} />

@@ -3,7 +3,7 @@ import { WEEKDAYS } from '../constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { getByUser } from '../reducers/item';
 
-const WeekdaysContainer = ({ setYear }) => {
+const WeekdaysContainer = ({ setYear, year }) => {
 
     const dispatch = useDispatch();
     const user = useSelector(state => state.user.user);
@@ -14,9 +14,10 @@ const WeekdaysContainer = ({ setYear }) => {
 
     return (
         <div className='weekdays_container'>
-            <select id="year_select" onChange={selectHandler}>
-                <option value="2023">2023</option>
-                <option value="2024">2024</option>
+            <select id="year_select" onChange={selectHandler} value={year}>
+                {
+                    [...Array(2200 - 1950).keys().map(i => 1950 + i)].map(y => <option key={y} value={y}>{y}</option>)
+                }
             </select>
             <div className="weekdays">
                 {['  ', ...WEEKDAYS].map(d => <span key={d}>{d}</span>)}
