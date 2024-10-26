@@ -32,6 +32,9 @@ const Tile = ({ date, year }) => {
                         break;
                 }
             }
+            if (date2String(new Date()) === date2String(date)) {
+                setStyle(prev => ({ ...prev, boxShadow: 'inset 0px 0px 0px 2px white' }))
+            }
         }, [items, year]
     );
 
