@@ -26,7 +26,7 @@ const WaterPanel = ({ item }) => {
             <form onSubmit={submitHandler}>
                 <div>Задать количество воды (мл):</div>
                 <input id='water_counter' type="number" value={water} onChange={e => setWater(e.target.value)} />
-                <button disabled={String(water) === ''} type="submit">SAVE</button>
+                <button disabled={String(water) === '' || water == item.water} type="submit">SAVE</button>
             </form>
         </div>
     )

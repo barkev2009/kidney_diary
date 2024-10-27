@@ -15,7 +15,7 @@ const StepsPanel = ({ item }) => {
         <form onSubmit={submitHandler}>
             <div>Задать количество шагов:</div>
             <input type="number" value={steps} onChange={e => setSteps(e.target.value)} />
-            <button disabled={String(steps) === ''} type="submit">SAVE</button>
+            <button disabled={String(steps) === '' || steps == item.steps} type="submit">SAVE</button>
         </form>
     )
 }
