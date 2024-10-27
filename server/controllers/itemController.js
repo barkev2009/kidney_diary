@@ -62,17 +62,18 @@ class ItemController {
         tryCatchWrapper(
             async () => {
                 const { uuid } = req.params;
-                const { date, water, steps } = req.body;
+                const { water, steps } = req.body;
 
                 const item = await Item.findOne({ where: { uuid } });
                 if (!item) {
                     return next(ApiError.badRequest(`Записи с uuid ${uuid} не существует`));
                 }
                 const { water_rating, steps_rating, total_rating } = calculateRatings({ water, steps });
-                const result = await Item.update(
-                    { date, water, steps, water_rating, steps_rating, total_rating },
+                await Item.update(
+                    { water, steps, water_rating, steps_rating, total_rating },
                     { where: { uuid } }
                 );
+                const result = await Item.findOne({ where: { uuid } });
 
                 return resp.json(result)
             }, req, resp, next, 'ItemController.edit'
@@ -143,10 +144,14 @@ class ItemController {
                 if (!user) {
                     return next(ApiError.badRequest(`Пользователя с uuid ${uuid} не существует`));
                 }
-                const items = await Item.findAll({ where: { userId: user.id, date: {
-                    [Op.gte]: new Date(`${year}-01-01 00:00:00`),
-                    [Op.lte]: new Date(`${year}-12-31 23:59:59`)
-                } } });
+                const items = await Item.findAll({
+                    where: {
+                        userId: user.id, date: {
+                            [Op.gte]: new Date(`${year}-01-01 00:00:00`),
+                            [Op.lte]: new Date(`${year}-12-31 23:59:59`)
+                        }
+                    }
+                });
 
                 return resp.json(items)
             }, req, resp, next, 'ItemController.getByUserYear'

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getByDateAPI, getByUserAPI } from '../api/item';
+import { editItemAPI, getByDateAPI, getByUserAPI } from '../api/item';
 
 export const getByDate = createAsyncThunk(
     'item/getByDate',
@@ -8,6 +8,10 @@ export const getByDate = createAsyncThunk(
 export const getByUser = createAsyncThunk(
     'item/getByUser',
     getByUserAPI
+)
+export const editItem = createAsyncThunk(
+    'item/editItem',
+    editItemAPI
 )
 
 const initialState = {
@@ -33,6 +37,12 @@ export const userSlice = createSlice({
             .addCase(
                 getByUser.fulfilled, (state, action) => {
                     state.userItems = action.payload
+                }
+            )
+            .addCase(
+                editItem.fulfilled, (state, action) => {
+                    state.data = action.payload;
+                    state.userItems = [...state.userItems.filter(i => i.uuid !== action.payload.uuid), action.payload];
                 }
             )
     }

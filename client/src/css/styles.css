@@ -162,3 +162,10 @@ code {
 .month_container .month.even {
   background-color: var(--backgroundDarker);
 }
+
+/* Slider Content */
+
+.item_container .water_button {
+  height: 3rem;
+  margin: 10px;
+}
