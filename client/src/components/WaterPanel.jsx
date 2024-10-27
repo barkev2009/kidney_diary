@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { editItem } from '../reducers/item';
 
@@ -6,6 +6,12 @@ const WaterPanel = ({ item }) => {
 
     const dispatch = useDispatch();
     const [water, setWater] = useState(item.water);
+
+    useEffect(
+        () => {
+            setWater(item.water);
+        }, [item]
+    );
 
     const clickHandler = (water) => {
         return () => {
