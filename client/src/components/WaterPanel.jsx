@@ -10,7 +10,7 @@ const WaterPanel = ({ item }) => {
     useEffect(
         () => {
             setWater(item.water);
-        }, [item]
+        }, [item.water]
     );
 
     const clickHandler = (water) => {
