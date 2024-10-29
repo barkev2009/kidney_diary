@@ -1,39 +1,9 @@
 const ApiError = require('../error/ApiError');
-const { User, Item, UserParameter } = require('../models/models');
+const { User, Item } = require('../models/models');
 const tryCatchWrapper = require('../utils/tryCatchWrapper');
 const uuidLib = require('uuid');
 const { Op } = require('sequelize');
-
-const calculateRatings = async ({ water, steps }) => {
-    const userParameter = await UserParameter.findOne(
-        {
-            where: {
-                water_min: { [Op.lte]: water },
-                [Op.or]: {
-                    water_max: { [Op.gte]: water },
-                    water_max: null
-                },
-                steps_min: { [Op.lte]: steps },
-                [Op.or]: {
-                    steps_max: { [Op.gte]: steps },
-                    steps_max: null
-                }
-            }
-        }
-    );
-    if (userParameter) {
-        return {
-            water_rating: userParameter.water_rating,
-            steps_rating: userParameter.steps_rating,
-            total_rating: Math.floor((userParameter.water_rating + userParameter.steps_rating) / 2)
-        }
-    }
-    return {
-        water_rating: 0,
-        steps_rating: 0,
-        total_rating: 0
-    }
-}
+const { calculateRatings } = require('../utils/calculateRatings');
 
 class ItemController {
     async create(req, resp, next) {
@@ -47,7 +17,7 @@ class ItemController {
                     return next(ApiError.badRequest(`Пользователя с uuid ${uuid} не существует`));
                 }
 
-                const { water_rating, steps_rating, total_rating } = calculateRatings({ water, steps });
+                const { water_rating, steps_rating, total_rating } = await calculateRatings({ water, steps });
                 const item = await Item.create({
                     userId: user.id, uuid: uuidLib.v4(),
                     date, water, steps, water_rating, steps_rating, total_rating
@@ -68,7 +38,8 @@ class ItemController {
                 if (!item) {
                     return next(ApiError.badRequest(`Записи с uuid ${uuid} не существует`));
                 }
-                const { water_rating, steps_rating, total_rating } = calculateRatings({ water, steps });
+                const { water_rating, steps_rating, total_rating } = await calculateRatings({ water, steps });
+                console.log({ water_rating, steps_rating, total_rating });
                 await Item.update(
                     { water, steps, water_rating, steps_rating, total_rating },
                     { where: { uuid } }
@@ -108,7 +79,7 @@ class ItemController {
                     }
                 });
                 if (!item) {
-                    const { water_rating, steps_rating, total_rating } = calculateRatings({ water: 0, steps: 0 });
+                    const { water_rating, steps_rating, total_rating } = await calculateRatings({ water: 0, steps: 0 });
                     item = await Item.create({
                         userId: user.id, uuid: uuidLib.v4(),
                         date: new Date(date), water: 0, steps: 0, water_rating, steps_rating, total_rating

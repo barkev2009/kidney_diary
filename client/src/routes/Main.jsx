@@ -6,6 +6,8 @@ import TileContainer from '../containers/TileContainer';
 import MonthContainer from '../containers/MonthContainer';
 import { useDispatch, useSelector } from 'react-redux';
 import { getByUser } from '../reducers/item';
+import { getParamsByUser } from '../reducers/userParameter';
+import UserParameterSlider from '../components/UserParameterSlider';
 
 const Main = () => {
 
@@ -18,14 +20,16 @@ const Main = () => {
         () => {
             if (user.id) {
                 dispatch(getByUser({ uuid: user.id, year }));
+                dispatch(getParamsByUser({ uuid: user.id }));
             }
         }, [user]
     );
 
     return (
         <div className='main_container'>
-            <WeekdaysContainer year={year} setYear={setYear} />
+            <WeekdaysContainer year={year} setYear={setYear}/>
             <Slider year={year} />
+            <UserParameterSlider />
             <TileContainer year={year} />
             <MonthContainer year={year} />
         </div>

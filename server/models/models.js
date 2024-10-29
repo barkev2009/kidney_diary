@@ -18,12 +18,10 @@ const UserParameter = sequelize.define(
     {
         id: { type: DataTypes.INTEGER, unique: true, primaryKey: true, allowNull: false, autoIncrement: true },
         uuid: { type: DataTypes.STRING, allowNull: false },
-        water_min: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
-        water_max: { type: DataTypes.INTEGER, allowNull: true },
-        water_rating: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
-        steps_min: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
-        steps_max: { type: DataTypes.INTEGER, allowNull: true },
-        steps_rating: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 }
+        limit_min: { type: DataTypes.INTEGER, allowNull: true },
+        limit_max: { type: DataTypes.INTEGER, allowNull: true },
+        rating: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
+        type: { type: DataTypes.STRING, allowNull: true }
     }
 )
 
