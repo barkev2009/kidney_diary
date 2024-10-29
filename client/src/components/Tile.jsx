@@ -24,6 +24,9 @@ const Tile = ({ date, year }) => {
             const item = items.filter(i => i.date.split('T')[0] === date2String(date))[0];
             if (item) {
                 switch (item.water_rating) {
+                    case 0:
+                        setStyle(prev => ({ ...prev, backgroundColor: '#703030' }));
+                        break;
                     case 1:
                         setStyle(prev => ({ ...prev, backgroundColor: '#703030' }));
                         break;
