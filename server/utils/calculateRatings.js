@@ -1,35 +1,42 @@
 const { UserParameter } = require("../models/models");
 const { Op } = require('sequelize');
 
-const calculateRatings = async ({ water, steps }) => {
-    // const userParameter = await UserParameter.findOne(
-    //     {
-    //         where: {
-    //             water_min: { [Op.lte]: water },
-    //             [Op.or]: {
-    //                 water_max: { [Op.gte]: water },
-    //                 water_max: null
-    //             },
-    //             steps_min: { [Op.lte]: steps },
-    //             [Op.or]: {
-    //                 steps_max: { [Op.gte]: steps },
-    //                 steps_max: null
-    //             }
-    //         }
-    //     }
-    // );
-    // if (userParameter) {
-    //     return {
-    //         water_rating: userParameter.water_rating,
-    //         steps_rating: userParameter.steps_rating,
-    //         total_rating: Math.ceil((userParameter.water_rating + userParameter.steps_rating) / 2)
-    //     }
-    // }
-    return {
-        water_rating: 0,
-        steps_rating: 0,
-        total_rating: 0
+const calculateRating = async ({ type, value }) => {
+    if (!value) {
+        return 0;
     }
+    const userParameter = await UserParameter.findOne(
+        {
+            where: {
+                type,
+                [Op.and]: [
+                    {
+                        [Op.or]: [
+                            { limit_max: { [Op.gte]: value } },
+                            { limit_max: null }
+                        ]
+                    },
+                    {
+                        [Op.or]: [
+                            { limit_min: { [Op.lte]: value } },
+                            { limit_min: null }
+                        ]
+                    }
+                ]
+            }
+        }
+    );
+    if (userParameter) {
+        return userParameter.rating;
+    }
+    return 0;
 }
 
-module.exports = { calculateRatings };
+const calculateRatings = async ({ water, steps }) => {
+    const water_rating = await calculateRating({ type: 'water', value: water });
+    const steps_rating = await calculateRating({ type: 'steps', value: steps });
+    const total_rating = water_rating + steps_rating;
+    return { water_rating, steps_rating, total_rating }
+}
+
+module.exports = { calculateRating, calculateRatings };

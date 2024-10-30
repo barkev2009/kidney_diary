@@ -20,7 +20,7 @@ const WeekdaysContainer = ({ setYear, year }) => {
                     [...Array(2200 - 1950).keys().map(i => 1950 + i)].map(y => <option key={y} value={y}>{y}</option>)
                 }
             </select>
-            {/* <button onClick={() => dispatch(setActive())}>PARAMETERS</button> */}
+            <button onClick={() => dispatch(setActive())}>PARAMETERS</button>
             <div className="weekdays">
                 {['  ', ...WEEKDAYS].map(d => <span key={d}>{d}</span>)}
             </div>

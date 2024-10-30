@@ -5,13 +5,13 @@ export const getParamsByUserAPI = async ({ uuid }) => {
     return data;
 }
 
-export const createParamAPI = async ({ uuid, water_min, water_max, water_rating, steps_min, steps_max, steps_rating }) => {
-    const { data } = await $authHost.post('api/userParameter', { uuid, water_min, water_max, water_rating, steps_min, steps_max, steps_rating });
+export const createParamAPI = async ({ uuid, limit_min, limit_max, rating, type }) => {
+    const { data } = await $authHost.post('api/userParameter', { uuid, limit_min, limit_max, rating, type });
     return data;
 }
 
-export const editParamAPI = async ({ uuid, water_min, water_max, water_rating, steps_min, steps_max, steps_rating }) => {
-    const { data } = await $authHost.put('api/userParameter/' + uuid, { water_min, water_max, water_rating, steps_min, steps_max, steps_rating });
+export const editParamAPI = async ({ uuid, limit_min, limit_max, rating, type }) => {
+    const { data } = await $authHost.put('api/userParameter/' + uuid, { limit_min, limit_max, rating, type });
     return data;
 }
 

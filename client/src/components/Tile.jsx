@@ -25,22 +25,22 @@ const Tile = ({ date, year }) => {
             if (item) {
                 switch (item.water_rating) {
                     case 0:
-                        setStyle(prev => ({ ...prev, backgroundColor: '#703030' }));
+                        setStyle(prev => ({ ...prev, backgroundColor: 'hsl(0, 40%, 31%)' }));
                         break;
                     case 1:
-                        setStyle(prev => ({ ...prev, backgroundColor: '#703030' }));
+                        setStyle(prev => ({ ...prev, backgroundColor: 'hsl(20, 40%, 31%)' }));
                         break;
                     case 2:
-                        setStyle(prev => ({ ...prev, backgroundColor: '#703030' }));
+                        setStyle(prev => ({ ...prev, backgroundColor: 'hsl(40, 40%, 31%)' }));
                         break;
                     case 3:
-                        setStyle(prev => ({ ...prev, backgroundColor: '#703030' }));
+                        setStyle(prev => ({ ...prev, backgroundColor: 'hsl(60, 40%, 31%)' }));
                         break;
                     case 4:
-                        setStyle(prev => ({ ...prev, backgroundColor: '#703030' }));
+                        setStyle(prev => ({ ...prev, backgroundColor: 'hsl(80, 40%, 31%)' }));
                         break;
                     case 5:
-                        setStyle(prev => ({ ...prev, backgroundColor: '#703030' }));
+                        setStyle(prev => ({ ...prev, backgroundColor: 'hsl(100, 40%, 31%)' }));
                         break;
                     default:
                         setStyle(prev => ({ ...prev, backgroundColor: 'transparent' }));

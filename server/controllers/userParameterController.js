@@ -5,24 +5,26 @@ const tryCatchWrapper = require('../utils/tryCatchWrapper');
 const uuidLib = require('uuid');
 
 const recalculateRatings = async (userId) => {
-    // const items = await Item.findAll({ where: { userId } });
-    // let item;
-    // for (let i = 0; i < items.length; i++) {
-    //     item = items[i];
-    //     const { water_rating, steps_rating, total_rating } = await calculateRatings({ water: item.water, steps: item.steps });
-    //     await Item.update(
-    //         { water_rating, steps_rating, total_rating },
-    //         { where: { uuid: item.uuid } }
-    //     );
-    // }
-    // return true;
+    const items = await Item.findAll({ where: { userId } });
+    let item;
+    for (let i = 0; i < items.length; i++) {
+        item = items[i];
+        const { water_rating, steps_rating, total_rating } = await calculateRatings({ water: item.water, steps: item.steps });
+        await Item.update(
+            { water_rating, steps_rating, total_rating },
+            { where: { uuid: item.uuid } }
+        );
+    }
+    return true;
 }
 
 class UserParameterController {
     async create(req, resp, next) {
         tryCatchWrapper(
             async () => {
-                const { uuid, limit_min, limit_max, rating, type } = req.body;
+                let { uuid, limit_min, limit_max, rating, type } = req.body;
+                if (limit_max === '') { limit_max = undefined }
+                if (limit_min === '') { limit_min = undefined }
 
                 const user = await User.findOne({ where: { uuid } });
                 if (!user) {
@@ -32,7 +34,7 @@ class UserParameterController {
                 const userParameter = await UserParameter.create({
                     userId: user.id, uuid: uuidLib.v4(), limit_min, limit_max, rating, type
                 });
-                // console.log('HERE');
+
                 await recalculateRatings(user.id);
 
                 return resp.json(userParameter)
