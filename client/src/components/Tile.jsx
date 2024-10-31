@@ -55,7 +55,7 @@ const Tile = ({ date, year }) => {
 
     return (
         <div style={style} id={date2String(date)} onClick={clickHandler} className='tile'>
-            {date.getDate()}
+            <div>{date.getDate()}</div>
         </div>
     )
 }
