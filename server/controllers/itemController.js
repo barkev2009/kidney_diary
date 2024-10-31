@@ -32,14 +32,19 @@ class ItemController {
         tryCatchWrapper(
             async () => {
                 const { uuid } = req.params;
-                const { water, steps } = req.body;
+                let { water, steps } = req.body;
 
                 const item = await Item.findOne({ where: { uuid } });
                 if (!item) {
                     return next(ApiError.badRequest(`Записи с uuid ${uuid} не существует`));
                 }
+                if (!water) {
+                    water = item.water
+                }
+                if (!steps) {
+                    steps = item.steps
+                }
                 const { water_rating, steps_rating, total_rating } = await calculateRatings({ water, steps });
-                console.log({ water_rating, steps_rating, total_rating });
                 await Item.update(
                     { water, steps, water_rating, steps_rating, total_rating },
                     { where: { uuid } }

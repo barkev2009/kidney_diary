@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { editItemAPI, getByDateAPI, getByUserAPI } from '../api/item';
+import { TILE_ITEMS } from '../constants';
 
 export const getByDate = createAsyncThunk(
     'item/getByDate',
@@ -16,7 +17,8 @@ export const editItem = createAsyncThunk(
 
 const initialState = {
     data: {},
-    userItems: []
+    userItems: [],
+    tileType: TILE_ITEMS[0].value
 };
 
 export const userSlice = createSlice({
@@ -25,6 +27,9 @@ export const userSlice = createSlice({
     reducers: {
         clearItem(state, action) {
             state.data = {};
+        },
+        setTileType(state, action) {
+            state.tileType = action.payload
         }
     },
     extraReducers: builder => {
@@ -49,5 +54,5 @@ export const userSlice = createSlice({
 });
 
 const { reducer } = userSlice;
-export const { clearItem } = userSlice.actions
+export const { clearItem, setTileType } = userSlice.actions
 export default reducer

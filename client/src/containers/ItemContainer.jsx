@@ -12,8 +12,9 @@ const ItemContainer = () => {
             <h2>{`Дата: ${new Date(item.date).toLocaleDateString()}`}</h2>
             {Object.keys(item).length > 0 && <WaterPanel item={item} />}
             {Object.keys(item).length > 0 && <StepsPanel item={item} />}
-            <h3>{`Всего мл за день: ${item.water}`}</h3>
-            <h3>{`Всего шагов за день: ${item.steps}`}</h3>
+            <h3>{`Рейтинг воды: ${item.water_rating}`}</h3>
+            <h3>{`Рейтинг шагов: ${item.steps_rating}`}</h3>
+            <h3>{`Рейтинг общий: ${item.total_rating}`}</h3>
             <pre>
                 {JSON.stringify(item, null, 2)}
             </pre>
