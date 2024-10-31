@@ -19,7 +19,8 @@ body {
   color: var(--main-color);
 }
 
-button, select {
+button,
+select {
   cursor: pointer;
 }
 
@@ -148,10 +149,6 @@ code {
 
 .tile_container .tile_row.even {
   background-color: var(--backgroundDarker);
-}
-
-.tile_container .tile_row {
-  /* height: calc(100% / 7); */
 }
 
 .tile_container .tile {
