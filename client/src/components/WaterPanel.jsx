@@ -5,22 +5,22 @@ import { editItem } from '../reducers/item';
 const WaterPanel = ({ item }) => {
 
     const dispatch = useDispatch();
-    const [water, setWater] = useState(item.water);
+    const [water, setWater] = useState(0);
 
     useEffect(
         () => {
-            setWater(item.water);
+            setWater(0);
         }, [item.water]
     );
 
     const clickHandler = (water) => {
         return () => {
-            dispatch(editItem({ uuid: item.uuid, water: item.water + water }));
+            dispatch(editItem({ uuid: item.uuid, water: Number(item.water) + Number(water) }));
         }
     }
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(editItem({ uuid: item.uuid, water }));
+        dispatch(editItem({ uuid: item.uuid, water: Number(item.water) + Number(water) }));
     }
 
     return (
@@ -30,7 +30,7 @@ const WaterPanel = ({ item }) => {
             <button className='water_button' onClick={clickHandler(180)}>+ 180 мл</button>
             <button className='water_button' onClick={clickHandler(600)}>+ 600 мл</button>
             <form onSubmit={submitHandler}>
-                <div>Задать количество воды (мл):</div>
+                <div>Задать дельту количества воды (мл):</div>
                 <input id='water_counter' type="number" value={water} onChange={e => setWater(e.target.value)} />
                 <button disabled={String(water) === '' || water == item.water} type="submit">SAVE</button>
             </form>

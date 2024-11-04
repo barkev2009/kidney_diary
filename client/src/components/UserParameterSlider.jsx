@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { createParam, setActive } from '../reducers/userParameter';
 import { SELECT_ITEMS } from '../constants';
+import UserParametersContainer from '../containers/UserParametersContainer';
 
 const UserParameterSlider = () => {
 
@@ -62,9 +63,7 @@ const UserParameterSlider = () => {
                 </div>
                 <button type="submit">CREATE</button>
             </form>
-            <pre>
-                {JSON.stringify(userParameters, null, 2)}
-            </pre>
+            <UserParametersContainer />
         </div>
     )
 }
