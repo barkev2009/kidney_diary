@@ -9,6 +9,7 @@ logs
 /server/backup/*
 /server/config/config.json
 /server/static/*
+/server/server.tar.gz
 
 *.bkp
 *.dtmp
