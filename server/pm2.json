@@ -2,7 +2,7 @@
     "apps": [
         {
             "name": "kidney-diary-back",
-            "script": "./server/index.js"
+            "script": "index.js"
         }
     ]
 }
