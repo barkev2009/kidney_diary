@@ -1,6 +1,7 @@
-export const AUTH_ROUTE = '/auth';
-export const REGISTER_ROUTE = '/register';
-export const MAIN_ROUTE = '/main/:id';
+const PUBLIC_URL = '/kidney_diary';
+export const AUTH_ROUTE = PUBLIC_URL + '/auth';
+export const REGISTER_ROUTE = PUBLIC_URL + '/register';
+export const MAIN_ROUTE = PUBLIC_URL + '/main/:id';
 
 export const CUR_PAGE_COOKIE = 'curPageKidneyDiary';
 
