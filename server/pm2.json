@@ -3,6 +3,7 @@
         {
             "name": "kidney-diary-back",
             "script": "index.js",
+            "args": "--https",
             "env": {
                 "PORT": 5004
             }

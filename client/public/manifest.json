@@ -1,6 +1,6 @@
 {
   "short_name": "Kidney Diary",
-  "name": "Diary for keeping track of water supply and number of steps walked",
+  "name": "Personal diary for keeping track of daily water supply",
   "icons": [
     {
       "src": "favicon.ico",
