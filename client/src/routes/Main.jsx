@@ -22,12 +22,12 @@ const Main = () => {
                 dispatch(getByUser({ uuid: user.id, year }));
                 dispatch(getParamsByUser({ uuid: user.id }));
             }
-        }, [user]
+        }, [user.id] 
     );
 
     return (
         <div className='main_container'>
-            <WeekdaysContainer year={year} setYear={setYear}/>
+            <WeekdaysContainer year={year} setYear={setYear} />
             <Slider year={year} />
             <UserParameterSlider />
             <TileContainer year={year} />

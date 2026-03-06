@@ -7,10 +7,12 @@ const ItemContainer = () => {
 
     const item = useSelector(state => state.item.data);
     const userParameters = useSelector(state => state.userParameter.data);
-    const maxWater = Math.max(...userParameters.filter(i => i.type === 'water').map(i => i.limit_max));
-    const maxSteps = Math.max(...userParameters.filter(i => i.type === 'steps').map(i => i.limit_max));
-    const waterHeight = Math.min(item.water / maxWater * 100, 100);
-    const stepsHeight = Math.min(item.steps / maxSteps * 100, 100);
+    const waterParams = userParameters.filter(i => i.type === 'water').map(i => i.limit_max).filter(Boolean);
+    const stepsParams = userParameters.filter(i => i.type === 'steps').map(i => i.limit_max).filter(Boolean);
+    const maxWater = waterParams.length > 0 ? Math.max(...waterParams) : 1;
+    const maxSteps = stepsParams.length > 0 ? Math.max(...stepsParams) : 1;
+    const waterHeight = Math.min((item.water ?? 0) / maxWater * 100, 100);
+    const stepsHeight = Math.min((item.steps ?? 0) / maxSteps * 100, 100);
 
     return (
         <div className='item_container'>

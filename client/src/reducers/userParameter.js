@@ -43,21 +43,12 @@ export const userParameterSlice = createSlice({
                     state.data.push(action.payload);
                 }
             )
-            .addCase(
-                editParam.fulfilled, (state, action) => {
-                    state.data.push(action.payload);
-                    state.data = [...state.data.filter(i => i.uuid !== action.payload.uuid), action.payload]
-                }
-            )
-            .addCase(
-                deleteParam.fulfilled, (state, action) => {
-                    if (action.payload.success) {
-
-                    }
-                    state.data.push(action.payload);
-                    state.data = [...state.data.filter(i => i.uuid !== action.payload.userParameter.uuid)]
-                }
-            )
+            .addCase(editParam.fulfilled, (state, action) => {
+                state.data = [...state.data.filter(i => i.uuid !== action.payload.uuid), action.payload];
+            })
+            .addCase(deleteParam.fulfilled, (state, action) => {
+                state.data = state.data.filter(i => i.uuid !== action.payload.userParameter.uuid);
+            })
     }
 });
 

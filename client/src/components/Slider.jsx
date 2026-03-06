@@ -12,21 +12,34 @@ const Slider = ({ year }) => {
     const item = useSelector(state => state.item.data);
     const user = useSelector(state => state.user.user);
 
+    const isActive = Object.keys(item).length !== 0;
+
     const logOutHandler = () => {
         navigate(AUTH_ROUTE);
         dispatch(setIsAuth(false));
-    }
+    };
     const closeSlider = () => {
         dispatch(clearItem());
         dispatch(getByUser({ uuid: user.id, year }));
-    }
+    };
+
+    // FIX: закрытие по клику на фон (backdrop)
+    const backdropClick = (e) => {
+        if (e.target === e.currentTarget) closeSlider();
+    };
 
     return (
-        <div className={`slider_container ${Object.keys(item).length !== 0 && 'active'}`}>
-            <button onClick={closeSlider}>BACK</button>
-            <button onClick={logOutHandler}>TO AUTH</button>
-            <ItemContainer />
-        </div>
+        <>
+            {/* FIX: затемнённый фон — клик по нему закрывает слайдер */}
+            {isActive && <div className='slider_backdrop' onClick={backdropClick} />}
+            <div className={`slider_container ${isActive ? 'active' : ''}`}>
+                <div className='slider_header'>
+                    <button className='btn btn_secondary' onClick={closeSlider}>← Назад</button>
+                    <button className='btn btn_danger' onClick={logOutHandler}>Выйти</button>
+                </div>
+                <ItemContainer />
+            </div>
+        </>
     )
 }
 
