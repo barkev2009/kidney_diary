@@ -1,7 +1,7 @@
 {
     "apps": [
         {
-            "name": "kidney-diary-back",
+            "name": "kidney-diary-server",
             "script": "index.js",
             "args": "--https",
             "env": {

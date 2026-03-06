@@ -28,7 +28,8 @@ const WaterPanel = ({ item }) => {
             <button className='water_button' onClick={clickHandler(60)}>+ 60 мл</button>
             <button className='water_button' onClick={clickHandler(90)}>+ 90 мл</button>
             <button className='water_button' onClick={clickHandler(180)}>+ 180 мл</button>
-            <button className='water_button' onClick={clickHandler(600)}>+ 600 мл</button>
+            <button className='water_button' onClick={clickHandler(500)}>+ 500 мл</button>
+            <button className='water_button' onClick={clickHandler(1000)}>+ 1000 мл</button>
             <form onSubmit={submitHandler}>
                 <div>Задать дельту количества воды (мл):</div>
                 <input id='water_counter' type="number" value={water} onChange={e => setWater(e.target.value)} />

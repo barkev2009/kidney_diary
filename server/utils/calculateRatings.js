@@ -12,7 +12,7 @@ const calculateRating = async ({ type, value }) => {
                 [Op.and]: [
                     {
                         [Op.or]: [
-                            { limit_max: { [Op.gte]: value } },
+                            { limit_max: { [Op.gt]: value } },
                             { limit_max: null }
                         ]
                     },
