@@ -22,18 +22,24 @@ const Main = () => {
                 dispatch(getByUser({ uuid: user.id, year }));
                 dispatch(getParamsByUser({ uuid: user.id }));
             }
-        }, [user.id] 
+        }, [user.id] // eslint-disable-line react-hooks/exhaustive-deps
     );
 
     return (
         <div className='main_container'>
-            <WeekdaysContainer year={year} setYear={setYear} />
+            {/* Левая колонка: календарь */}
+            <div className='calendar_column'>
+                <WeekdaysContainer year={year} setYear={setYear} />
+                <TileContainer year={year} />
+                <MonthContainer year={year} />
+            </div>
+
+            {/* Правая колонка: панель дня + параметры.
+                На мобиле — оверлей, на десктопе — постоянная боковая панель */}
             <Slider year={year} />
             <UserParameterSlider />
-            <TileContainer year={year} />
-            <MonthContainer year={year} />
         </div>
-    )
-}
+    );
+};
 
-export default Main
+export default Main;

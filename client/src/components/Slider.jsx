@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { AUTH_ROUTE } from '../constants';
@@ -14,33 +14,58 @@ const Slider = ({ year }) => {
 
     const isActive = Object.keys(item).length !== 0;
 
+    // Блокируем скролл страницы когда слайдер открыт на мобиле
+    useEffect(() => {
+        const isMobile = window.innerWidth < 768;
+        if (isActive && isMobile) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => { document.body.style.overflow = ''; };
+    }, [isActive]);
+
     const logOutHandler = () => {
         navigate(AUTH_ROUTE);
         dispatch(setIsAuth(false));
     };
+
     const closeSlider = () => {
         dispatch(clearItem());
         dispatch(getByUser({ uuid: user.id, year }));
     };
 
-    // FIX: закрытие по клику на фон (backdrop)
     const backdropClick = (e) => {
         if (e.target === e.currentTarget) closeSlider();
     };
 
     return (
         <>
-            {/* FIX: затемнённый фон — клик по нему закрывает слайдер */}
             {isActive && <div className='slider_backdrop' onClick={backdropClick} />}
+
             <div className={`slider_container ${isActive ? 'active' : ''}`}>
                 <div className='slider_header'>
-                    <button className='btn btn_secondary' onClick={closeSlider}>← Назад</button>
+                    <button className='btn btn_secondary slider_back_btn' onClick={closeSlider}>
+                        ← Назад
+                    </button>
+                    <span className='slider_date_label'>
+                        {isActive ? new Date(item.date).toLocaleDateString('ru-RU', {
+                            day: 'numeric', month: 'long', year: 'numeric'
+                        }) : ''}
+                    </span>
                     <button className='btn btn_danger' onClick={logOutHandler}>Выйти</button>
                 </div>
-                <ItemContainer />
+
+                {isActive
+                    ? <ItemContainer />
+                    : <div className='slider_empty'>
+                        <div className='slider_empty_icon'>📅</div>
+                        <div>Выберите день в календаре</div>
+                      </div>
+                }
             </div>
         </>
-    )
-}
+    );
+};
 
-export default Slider
+export default Slider;

@@ -130,8 +130,11 @@ button, select {
 /* FIX: backdrop для слайдера */
 .slider_backdrop {
   position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg);
   z-index: 99;
   animation: fadeIn 0.2s ease;
 }
@@ -159,6 +162,11 @@ button, select {
   border-bottom: 1px solid var(--border);
   z-index: 10;
   padding: 4px 0;
+}
+
+/* calendar_column на мобиле — просто блок, flex появляется на десктопе */
+.calendar_column {
+  display: block;
 }
 
 /* ─── ТУЛБАР ────────────────────────────────────────────── */
@@ -449,11 +457,13 @@ button, select {
   display: flex;
   gap: 8px;
   align-items: center;
+  min-width: 0; /* позволяет flex-детям сжиматься внутри контейнера */
 }
 
 .water_custom_form input,
 .steps_form input {
   flex: 1;
+  min-width: 0; /* input не распирает контейнер по своему min-content */
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
@@ -461,6 +471,12 @@ button, select {
   color: var(--text);
   font-family: inherit;
   font-size: 0.9rem;
+}
+
+.water_custom_form .btn,
+.steps_form .btn {
+  flex-shrink: 0; /* кнопка не сжимается, но и не вылезает */
+  white-space: nowrap;
 }
 
 .water_custom_form input:focus,
@@ -551,3 +567,103 @@ button, select {
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   ДЕСКТОП — боковая панель вместо оверлея
+   Breakpoint: 768px
+   ═══════════════════════════════════════════════════════════ */
+
+@media (min-width: 768px) {
+
+  /* main_container становится flex-строкой:
+     слева — календарь, справа — фиксированная панель */
+  .main_container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    overflow: hidden;
+    width: 100vw;
+  }
+
+  /* Колонка календаря — растягивается на оставшееся место */
+  .calendar_column {
+    flex: 1;
+    min-width: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  /* Панель дня — постоянная боковая колонка, не оверлей */
+  .slider_container {
+    position: relative;          /* убираем fixed */
+    transform: none !important;  /* убираем translateX */
+    width: 340px;
+    flex-shrink: 0;
+    height: 100vh;
+    border-right: none;
+    border-left: 1px solid var(--border);
+    box-shadow: none;
+    z-index: auto;
+    transition: none;
+  }
+
+  /* На десктопе панель всегда видна — даже без active */
+  .slider_container {
+    display: flex;
+  }
+
+  /* Backdrop скрыт на десктопе — панель не перекрывает календарь */
+  .slider_backdrop {
+    display: none;
+  }
+
+  /* Кнопка «← Назад» не нужна на десктопе — панель всегда открыта */
+  .slider_back_btn {
+    display: none;
+  }
+
+  /* Дата в хедере занимает центр, когда нет кнопки Назад */
+  .slider_date_label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  /* Числа в тайлах — меньше на десктопе, т.к. календарь уже */
+  .tile_container .tile * {
+    font-size: 1.8vw;
+  }
+
+  /* Weekdays в десктопе не sticky по всей странице,
+     а sticky внутри calendar_column */
+  .weekdays_container {
+    position: sticky;
+    top: 0;
+  }
+
+  /* Рейтинг-бары на десктопе могут быть чуть выше */
+  .rating_bar {
+    height: 220px;
+  }
+}
+
+/* Состояние «пустой панели» на десктопе */
+.slider_empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 24px;
+  text-align: center;
+}
+
+.slider_empty_icon {
+  font-size: 2.5rem;
+  opacity: 0.5;
+}
+
